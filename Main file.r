@@ -110,14 +110,14 @@ Chevy <- function(a,n=200){
   x <- rep(NA,n)
   x[1]=0.3
   for (i in 2:n){
-    x[i]=cos((a^2)*acos(x[i-1]))
+    x[i]=cos(a*acos(x[i-1]))
   }
   return(x)
 }
 
 n = 1000
-a <- seq(0.1,5,0.05)
-E <- ExGS <- ExSH <- rep(NA,length(c))
+a <- seq(2,4,0.05)
+E <- ExGS <- ExSH <- rep(NA,length(a))
 
 for(i in 1:length(a)){
 	Z <- Chevy(a[i],n) 
@@ -131,27 +131,30 @@ E
 ExGS
 ExSH
 
-plot(a, E, type="l", lwd=2, col="black", ylab="Measures", main="a)")
+plot(a, E, type="l", lwd=2, col="black", ylab="Measures", main="a)", 
+ylim=c(0.7,1))
 lines(a, ExGS, col="blue", lwd=2)
 lines(a, ExSH, lwd=2, col="red")
 legend("bottomright", c("PE","GS-PEx", "PEx"), 
 col=c("black","blue","red"), lwd=2, bty="n")
 
 n = 1000
-a <- seq(1.7,3.8,0.05)
-MEDGS <- MEDSH <- matrix(NA,length(a),length(a))
+a1 <- seq(2,4,0.05)
+a2 <- seq(2.6,4,0.05)
+MEDGS <- MEDSH <- matrix(NA,length(a1),length(a2))
 
-for(i in 1:length(c)) for(j in 1:length(c)){
-	Z1 <- Chevy(a[i],n) 
+for(i in 1:length(a1)) for(j in 1:length(a2)){
+	Z1 <- Chevy(a1[i],n) 
 	opd1 = ordinal_pattern_distribution(x = Z1, ndemb = 3)
-	Z2 <- Chevy(a[j],n) 
+	Z2 <- Chevy(a2[j],n) 
 	opd2 = ordinal_pattern_distribution(x = Z2, ndemb = 3)
 	MEDGS[i,j] = permutation_MEDdivergence(opd1,opd2,omega=0.5,type="GS") #/10
-	MEDSH[i,j] = permutation_MEDdivergence(opd1,opd2,omega=0.5,type="SH") #/10
+	#MEDSH[i,j] = permutation_MEDdivergence(opd1,opd2,omega=0.5,type="SH") #/10
 }
 
-image2D(MEDGS,a,a,xlab=expression(c[1]),ylab=expression(c[2]),main="b)")
-image2D(MEDSH,a,a,xlab=expression(c[1]),ylab=expression(c[2]),main="c)")
+image2D(MEDGS,a1,a2,xlab=expression(a[1]),ylab=expression(a[2]),main="b)", yaxt = "n")
+axis(side = 2, las = 1) 
+#image2D(MEDSH,a,a,xlab=expression(a[1]),ylab=expression(a[2]),main="c)")
 
 
 
