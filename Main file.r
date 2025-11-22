@@ -86,7 +86,7 @@ ExSH
 plot(c, ExSH, type="l", lwd=2, col="red", ylab="Measures", main="a)")
 lines(c, ExGS, col="blue", lwd=2)
 lines(c, E, lwd=2)
-legend("topleft", c("PE","GS-PEx", "PEx"), col=c("black","blue","red"), lwd=2, bty="n")
+legend("topleft", c("PE","PGS", "PExt"), col=c("black","blue","red"), lwd=2, bty="n")
 
 n = 1000
 c <- seq(1.2,3.345,0.05)
@@ -101,7 +101,8 @@ for(i in 1:length(c)) for(j in 1:length(c)){
 	MEDSH[i,j] = permutation_MEDdivergence(opd1,opd2,omega=0.5,type="SH") #/10
 }
 
-image2D(MEDGS,c,c,xlab=expression(c[1]),ylab=expression(c[2]),main="b)")
+image2D(MEDGS/10^4,c,c,xlab=expression(c[1]),ylab=expression(c[2]),main="b)")
+mtext(expression(x10^4),side=3,adj=1.25,cex=1.1)
 image2D(MEDSH,c,c,xlab=expression(c[1]),ylab=expression(c[2]),main="c)")
 
 # Chevyshev
@@ -131,12 +132,11 @@ E
 ExGS
 ExSH
 
-plot(a, E, type="l", lwd=2, col="black", ylab="Measures", main="a)", 
-ylim=c(0.7,1))
+plot(a, E, type="l", lwd=2, col="black", ylab="Measures", main="a)", ylim=c(0.7,1), yaxt = "n")
+axis(side = 2, las = 1)
 lines(a, ExGS, col="blue", lwd=2)
 lines(a, ExSH, lwd=2, col="red")
-legend("bottomright", c("PE","GS-PEx", "PEx"), 
-col=c("black","blue","red"), lwd=2, bty="n")
+legend("bottomright", c("PE","PGS", "PExt"), col=c("black","blue","red"), lwd=2, bty="n")
 
 n = 1000
 a1 <- seq(2,4,0.05)
@@ -152,8 +152,9 @@ for(i in 1:length(a1)) for(j in 1:length(a2)){
 	#MEDSH[i,j] = permutation_MEDdivergence(opd1,opd2,omega=0.5,type="SH") #/10
 }
 
-image2D(MEDGS,a1,a2,xlab=expression(a[1]),ylab=expression(a[2]),main="b)", yaxt = "n")
-axis(side = 2, las = 1) 
+image2D(MEDGS/10^3,a1,a2,xlab=expression(a[1]),ylab=expression(a[2]),main="b)", yaxt = "n")
+axis(side = 2, las = 1)
+mtext(expression(x10^3),side=3,adj=1.25,cex=1.1)
 #image2D(MEDSH,a,a,xlab=expression(a[1]),ylab=expression(a[2]),main="c)")
 
 
@@ -252,7 +253,7 @@ c(GS20_2,GS21_2,GS22_2),
 c(GS20_3,GS21_3,GS22_3)
 )
 
-plot(years, A[1,],type="o", ylim=c(0.6,1), xaxt='n', ylab="PExt-GS", lwd=2, 
+plot(years, A[1,],type="o", ylim=c(0.6,1), xaxt='n', ylab="PGS", lwd=2, 
 main="a)")
 axis(1,years)
 lines(years, A[2,],type="o",col="blue",lwd=2)
@@ -266,9 +267,10 @@ c(GS20_13,GS21_13,GS22_13),
 c(GS20_23,GS21_23,GS22_23)
 )
 
-plot(years, A[1,],type="o", ylim=c(370,1310), xaxt='n', 
-ylab=expression(MED[phi]), lwd=2, main="b)")
+plot(years, A[1,],type="o", ylim=c(370,1310), yaxt = "n", xaxt='n', 
+ylab=expression(MaxMED[phi]), lwd=2, main="b)")
 axis(1,years)
+axis(side = 2, las = 1)
 lines(years, A[2,],type="o",col="blue",lwd=2)
 lines(years, A[3,],type="o",col="red",lwd=2)
 legend("topright", c("India-USA","India-China","USA-China"), 
